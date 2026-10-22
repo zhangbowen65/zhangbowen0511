@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>前端示例首页 - skills</title>
+  <link rel="stylesheet" href="../cdn/fontawesome/css/all.min.css">
+  <style>
+    :root {
+      --zbw511_bg: #F7F8FA;
+      --zbw511_surface: #FFFFFF;
+      --zbw511_text: #1A1A2E;
+      --zbw511_text-secondary: #5C5C6E;
+      --zbw511_text-muted: #9A9AA8;
+      --zbw511_accent: #0D9488;
+      --zbw511_accent-soft: rgba(13, 148, 136, 0.06);
+      --zbw511_border: #E2E4E9;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--zbw511_bg);
+      color: var(--zbw511_text);
+      font-family: -apple-system, 'PingFang SC', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .zbw511_page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 24px 56px;
+    }
+
+    .zbw511_home-link {
+      font-size: 13px;
+      color: var(--zbw511_text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .zbw511_home-link:hover {
+      color: var(--zbw511_accent);
+    }
+
+    .zbw511_hero {
+      padding: 24px 0 40px;
+    }
+
+    .zbw511_hero-title {
+      margin: 0;
+      font-family: Georgia, 'Noto Serif SC', 'Source Han Serif SC', 'SimSun', serif;
+      font-size: 2.5rem;
+      font-weight: 400;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+
+    .zbw511_hero-desc {
+      margin: 12px 0 0;
+      max-width: 60ch;
+      font-size: 1.0625rem;
+      color: var(--zbw511_text-secondary);
+    }
+
+    /* ===== 卡片网格：hairline 边框，无阴影 ===== */
+    .zbw511_grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 0;
+      border-top: 1px solid var(--zbw511_border);
+      border-left: 1px solid var(--zbw511_border);
+    }
+
+    .zbw511_card {
+      display: block;
+      padding: 24px;
+      border-right: 1px solid var(--zbw511_border);
+      border-bottom: 1px solid var(--zbw511_border);
+      background: var(--zbw511_surface);
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s ease;
+    }
+
+    .zbw511_card:hover {
+      background: var(--zbw511_accent-soft);
+    }
+
+    .zbw511_card-icon {
+      font-size: 24px;
+      color: var(--zbw511_text);
+      transition: color 0.15s ease;
+    }
+
+    .zbw511_card:hover .zbw511_card-icon {
+      color: var(--zbw511_accent);
+    }
+
+    .zbw511_card-title {
+      margin: 14px 0 6px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .zbw511_card-desc {
+      margin: 0;
+      font-size: 13px;
+      color: var(--zbw511_text-muted);
+      line-height: 1.7;
+    }
+
+    .zbw511_footer {
+      margin-top: 40px;
+      border-top: 1px solid var(--zbw511_border);
+      padding-top: 16px;
+    }
+
+    .zbw511_footer-text {
+      margin: 0;
+      font-size: 13px;
+      color: var(--zbw511_text-muted);
+      line-height: 1.8;
+    }
+
+    @media (max-width: 560px) {
+      .zbw511_hero-title { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="zbw511_page">
+    <a href="../index.html" class="zbw511_home-link">返回抓小球游戏首页</a>
+
+    <header class="zbw511_hero">
+      <h1 class="zbw511_hero-title">前端示例</h1>
+      <p class="zbw511_hero-desc">图标系统与移动端组件演示，资源全部本地化，可离线打开。</p>
+    </header>
+
+    <main class="zbw511_grid">
+      <a href="font/iconfont-1.html" class="zbw511_card">
+        <i class="fa-solid fa-font zbw511_card-icon"></i>
+        <h2 class="zbw511_card-title">Font Awesome 字体图标</h2>
+        <p class="zbw511_card-desc">Webfont 方案：图标即字符，font-size/color 控制样式，含实心、常规、品牌三组。</p>
+      </a>
+
+      <a href="font/iconfont-2.html" class="zbw511_card">
+        <i class="fa-solid fa-draw-polygon zbw511_card-icon"></i>
+        <h2 class="zbw511_card-title">Lucide 图标（SVG）</h2>
+        <p class="zbw511_card-desc">SVG 方案：占位符替换为内联矢量图形，描边继承文字颜色，可任意缩放。</p>
+      </a>
+
+      <a href="font/iconfont-3.html" class="zbw511_card">
+        <i class="fa-solid fa-mobile-screen zbw511_card-icon"></i>
+        <h2 class="zbw511_card-title">移动端下导航 · 字体图标</h2>
+        <p class="zbw511_card-desc">固定底部导航，四项自适应均分，含数字徽章与红点（Font Awesome 实现）。</p>
+      </a>
+
+      <a href="font/iconfont-4.html" class="zbw511_card">
+        <i class="fa-solid fa-mobile-screen-button zbw511_card-icon"></i>
+        <h2 class="zbw511_card-title">移动端下导航 · SVG</h2>
+        <p class="zbw511_card-desc">固定底部导航，四项自适应均分，含数字徽章与红点（Lucide SVG 实现）。</p>
+      </a>
+
+      <a href="../index.html" class="zbw511_card">
+        <i class="fa-solid fa-baseball zbw511_card-icon"></i>
+        <h2 class="zbw511_card-title">抓小球小游戏</h2>
+        <p class="zbw511_card-desc">上级目录主项目：两分钟倒计时，点击蓝球得分，点空白扣分，最高分持久化。</p>
+      </a>
+    </main>
+
+    <footer class="zbw511_footer">
+      <p class="zbw511_footer-text">
+        目录内页面均包含返回本页的链接；CDN 资源位于 ../cdn/（fontawesome + lucide），全部相对路径引用。
+      </p>
+    </footer>
+  </div>
+</body>
+</html>

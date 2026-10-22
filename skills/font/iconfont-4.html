@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>移动端下导航 · SVG 图标</title>
+  <style>
+    :root {
+      --zbw511_bg: #F7F8FA;
+      --zbw511_surface: #FFFFFF;
+      --zbw511_text: #1A1A2E;
+      --zbw511_text-secondary: #5C5C6E;
+      --zbw511_text-muted: #9A9AA8;
+      --zbw511_accent: #0D9488;
+      --zbw511_accent-soft: rgba(13, 148, 136, 0.06);
+      --zbw511_border: #E2E4E9;
+      --zbw511_badge: #E5484D;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--zbw511_bg);
+      color: var(--zbw511_text);
+      font-family: -apple-system, 'PingFang SC', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== 页面内容（底部留白避开固定导航） ===== */
+    .zbw511_page {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 28px 24px 120px;
+    }
+
+    .zbw511_home-link {
+      font-size: 13px;
+      color: var(--zbw511_text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .zbw511_home-link:hover {
+      color: var(--zbw511_accent);
+    }
+
+    .zbw511_hero-title {
+      margin: 24px 0 0;
+      font-family: Georgia, 'Noto Serif SC', 'Source Han Serif SC', 'SimSun', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+
+    .zbw511_hero-desc {
+      margin: 10px 0 0;
+      font-size: 1rem;
+      color: var(--zbw511_text-secondary);
+    }
+
+    .zbw511_tip {
+      margin-top: 32px;
+      padding: 14px 16px;
+      border-left: 2px solid var(--zbw511_accent);
+      background: var(--zbw511_surface);
+      font-size: 14px;
+      color: var(--zbw511_text-secondary);
+    }
+
+    /* ===== 固定底部导航：自适应宽度，4 项均分 ===== */
+    .zbw511_tabbar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      background: var(--zbw511_surface);
+      border-top: 1px solid var(--zbw511_border);
+      /* iOS 底部安全区适配 */
+      padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+
+    .zbw511_tab {
+      flex: 1 1 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 10px 0 8px;
+      color: var(--zbw511_text-muted);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .zbw511_tab--active {
+      color: var(--zbw511_accent);
+    }
+
+    /* 图标容器相对定位，徽章绝对定位于其右上角 */
+    .zbw511_tab-icon {
+      position: relative;
+      display: inline-flex;
+      line-height: 1;
+    }
+
+    /* Lucide 内联 SVG 尺寸 */
+    .zbw511_tab-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .zbw511_tab-label {
+      font-size: 11px;
+    }
+
+    /* 数字徽章 */
+    .zbw511_badge-num {
+      position: absolute;
+      top: -6px;
+      left: 12px;
+      min-width: 16px;
+      height: 16px;
+      padding: 0 4px;
+      border-radius: 8px;
+      background: var(--zbw511_badge);
+      color: #fff;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 16px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    /* 红点 */
+    .zbw511_badge-dot {
+      position: absolute;
+      top: -2px;
+      left: 16px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--zbw511_badge);
+      border: 1.5px solid var(--zbw511_surface);
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <main class="zbw511_page">
+    <a href="../index.html" class="zbw511_home-link">返回首页</a>
+
+    <h1 class="zbw511_hero-title">移动端下导航</h1>
+    <p class="zbw511_hero-desc">Lucide SVG 图标方案：四项导航固定于底部并均分宽度，消息带数字徽章，通知带红点。</p>
+
+    <div class="zbw511_tip">
+      缩放浏览器窗口，导航栏始终贴底且四项自适应均分宽度；点击导航项无跳转，仅作样式演示。
+    </div>
+  </main>
+
+  <!-- 固定底部导航 -->
+  <nav class="zbw511_tabbar" aria-label="底部导航">
+    <a href="#" class="zbw511_tab zbw511_tab--active">
+      <span class="zbw511_tab-icon"><i data-lucide="house"></i></span>
+      <span class="zbw511_tab-label">首页</span>
+    </a>
+    <a href="#" class="zbw511_tab">
+      <span class="zbw511_tab-icon">
+        <i data-lucide="message-circle"></i>
+        <em class="zbw511_badge-num">3</em>
+      </span>
+      <span class="zbw511_tab-label">消息</span>
+    </a>
+    <a href="#" class="zbw511_tab">
+      <span class="zbw511_tab-icon">
+        <i data-lucide="bell"></i>
+        <i class="zbw511_badge-dot"></i>
+      </span>
+      <span class="zbw511_tab-label">通知</span>
+    </a>
+    <a href="#" class="zbw511_tab">
+      <span class="zbw511_tab-icon"><i data-lucide="user"></i></span>
+      <span class="zbw511_tab-label">我的</span>
+    </a>
+  </nav>
+
+  <script src="../../cdn/lucide/lucide.min.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

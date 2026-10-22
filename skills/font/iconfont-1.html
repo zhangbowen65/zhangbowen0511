@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Font Awesome 字体图标</title>
+  <link rel="stylesheet" href="../../cdn/fontawesome/css/all.min.css">
+  <style>
+    :root {
+      --zbw511_bg: #F7F8FA;
+      --zbw511-surface: #FFFFFF;
+      --zbw511_text: #1A1A2E;
+      --zbw511_text-secondary: #5C5C6E;
+      --zbw511_text-muted: #9A9AA8;
+      --zbw511_accent: #0D9488;
+      --zbw511_accent-soft: rgba(13, 148, 136, 0.06);
+      --zbw511_border: #E2E4E9;
+      --zbw511_border-light: #F0F1F4;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--zbw511_bg);
+      color: var(--zbw511_text);
+      font-family: -apple-system, 'PingFang SC', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== 返回链接 ===== */
+    .zbw511_nav {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 24px 8px;
+    }
+
+    .zbw511_home-link {
+      font-size: 13px;
+      color: var(--zbw511_text-muted);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.2s ease;
+    }
+
+    .zbw511_home-link:hover {
+      color: var(--zbw511_accent);
+    }
+
+    /* ===== Hero ===== */
+    .zbw511_hero {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 24px 48px;
+    }
+
+    .zbw511_hero-title {
+      margin: 0;
+      font-family: Georgia, 'Noto Serif SC', 'Source Han Serif SC', 'SimSun', serif;
+      font-size: 2.5rem;
+      font-weight: 400;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+
+    .zbw511_hero-desc {
+      margin: 12px 0 0;
+      max-width: 60ch;
+      font-size: 1.0625rem;
+      color: var(--zbw511_text-secondary);
+      line-height: 1.7;
+    }
+
+    /* ===== 区块 ===== */
+    .zbw511_section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .zbw511_section + .zbw511_section {
+      margin-top: 48px;
+    }
+
+    .zbw511_section-head {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .zbw511_section-label {
+      font-size: 14px;
+      color: var(--zbw511_text-muted);
+      font-weight: 400;
+    }
+
+    .zbw511_section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--zbw511_border-light);
+    }
+
+    /* ===== 图标网格：hairline 分隔（无卡片/无阴影） ===== */
+    .zbw511_grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      border-top: 1px solid var(--zbw511_border);
+      border-left: 1px solid var(--zbw511_border);
+    }
+
+    .zbw511_item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 28px 12px;
+      border-right: 1px solid var(--zbw511_border);
+      border-bottom: 1px solid var(--zbw511_border);
+      background: var(--zbw511-surface);
+      transition: background 0.15s ease;
+    }
+
+    .zbw511_item:hover {
+      background: var(--zbw511_accent-soft);
+    }
+
+    /* 字体图标：用 font-size 控制，与文字同源 */
+    .zbw511_icon {
+      font-size: 40px;
+      color: var(--zbw511_text);
+      transition: color 0.15s ease;
+    }
+
+    .zbw511_item:hover .zbw511_icon {
+      color: var(--zbw511_accent);
+    }
+
+    .zbw511_icon-name {
+      font-size: 12px;
+      color: var(--zbw511_text-muted);
+      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+      letter-spacing: 0.02em;
+    }
+
+    /* ===== 底部说明 ===== */
+    .zbw511_footer {
+      max-width: 900px;
+      margin: 56px auto 48px;
+      padding: 0 24px;
+    }
+
+    .zbw511_footer-inner {
+      border-top: 1px solid var(--zbw511_border);
+      padding-top: 20px;
+    }
+
+    .zbw511_footer-text {
+      margin: 0;
+      font-size: 13px;
+      color: var(--zbw511_text-muted);
+      line-height: 1.8;
+    }
+
+    /* ===== 响应式 ===== */
+    @media (max-width: 560px) {
+      .zbw511_hero-title { font-size: 2rem; }
+      .zbw511_grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <nav class="zbw511_nav">
+    <a href="../index.html" class="zbw511_home-link">返回首页</a>
+  </nav>
+
+  <header class="zbw511_hero">
+    <h1 class="zbw511_hero-title">Font Awesome</h1>
+    <p class="zbw511_hero-desc">
+      字体图标方案：图标以字符形式嵌入字体文件，通过 font-size 与 color 即可控制其尺寸与颜色。三种字重，各取一方。
+    </p>
+  </header>
+
+  <section class="zbw511_section">
+    <div class="zbw511_section-head">
+      <span class="zbw511_section-label">实心图标</span>
+      <span class="zbw511_section-line"></span>
+    </div>
+    <div class="zbw511_grid">
+      <div class="zbw511_item"><i class="fa-solid fa-house zbw511_icon"></i><span class="zbw511_icon-name">house</span></div>
+      <div class="zbw511_item"><i class="fa-solid fa-magnifying-glass zbw511_icon"></i><span class="zbw511_icon-name">magnifying-glass</span></div>
+      <div class="zbw511_item"><i class="fa-solid fa-gear zbw511_icon"></i><span class="zbw511_icon-name">gear</span></div>
+      <div class="zbw511_item"><i class="fa-solid fa-user zbw511_icon"></i><span class="zbw511_icon-name">user</span></div>
+      <div class="zbw511_item"><i class="fa-solid fa-heart zbw511_icon"></i><span class="zbw511_icon-name">heart</span></div>
+      <div class="zbw511_item"><i class="fa-solid fa-star zbw511_icon"></i><span class="zbw511_icon-name">star</span></div>
+      <div class="zbw511_item"><i class="fa-solid fa-bell zbw511_icon"></i><span class="zbw511_icon-name">bell</span></div>
+      <div class="zbw511_item"><i class="fa-solid fa-camera zbw511_icon"></i><span class="zbw511_icon-name">camera</span></div>
+      <div class="zbw511_item"><i class="fa-solid fa-envelope zbw511_icon"></i><span class="zbw511_icon-name">envelope</span></div>
+      <div class="zbw511_item"><i class="fa-solid fa-download zbw511_icon"></i><span class="zbw511_icon-name">download</span></div>
+      <div class="zbw511_item"><i class="fa-solid fa-trash zbw511_icon"></i><span class="zbw511_icon-name">trash</span></div>
+      <div class="zbw511_item"><i class="fa-solid fa-location-dot zbw511_icon"></i><span class="zbw511_icon-name">location-dot</span></div>
+    </div>
+  </section>
+
+  <section class="zbw511_section">
+    <div class="zbw511_section-head">
+      <span class="zbw511_section-label">常规图标</span>
+      <span class="zbw511_section-line"></span>
+    </div>
+    <div class="zbw511_grid">
+      <div class="zbw511_item"><i class="fa-regular fa-heart zbw511_icon"></i><span class="zbw511_icon-name">heart</span></div>
+      <div class="zbw511_item"><i class="fa-regular fa-star zbw511_icon"></i><span class="zbw511_icon-name">star</span></div>
+      <div class="zbw511_item"><i class="fa-regular fa-bell zbw511_icon"></i><span class="zbw511_icon-name">bell</span></div>
+      <div class="zbw511_item"><i class="fa-regular fa-envelope zbw511_icon"></i><span class="zbw511_icon-name">envelope</span></div>
+      <div class="zbw511_item"><i class="fa-regular fa-calendar zbw511_icon"></i><span class="zbw511_icon-name">calendar</span></div>
+      <div class="zbw511_item"><i class="fa-regular fa-user zbw511_icon"></i><span class="zbw511_icon-name">user</span></div>
+      <div class="zbw511_item"><i class="fa-regular fa-thumbs-up zbw511_icon"></i><span class="zbw511_icon-name">thumbs-up</span></div>
+      <div class="zbw511_item"><i class="fa-regular fa-clock zbw511_icon"></i><span class="zbw511_icon-name">clock</span></div>
+    </div>
+  </section>
+
+  <section class="zbw511_section">
+    <div class="zbw511_section-head">
+      <span class="zbw511_section-label">品牌图标</span>
+      <span class="zbw511_section-line"></span>
+    </div>
+    <div class="zbw511_grid">
+      <div class="zbw511_item"><i class="fa-brands fa-github zbw511_icon"></i><span class="zbw511_icon-name">github</span></div>
+      <div class="zbw511_item"><i class="fa-brands fa-weixin zbw511_icon"></i><span class="zbw511_icon-name">weixin</span></div>
+      <div class="zbw511_item"><i class="fa-brands fa-qq zbw511_icon"></i><span class="zbw511_icon-name">qq</span></div>
+      <div class="zbw511_item"><i class="fa-brands fa-bilibili zbw511_icon"></i><span class="zbw511_icon-name">bilibili</span></div>
+      <div class="zbw511_item"><i class="fa-brands fa-chrome zbw511_icon"></i><span class="zbw511_icon-name">chrome</span></div>
+      <div class="zbw511_item"><i class="fa-brands fa-apple zbw511_icon"></i><span class="zbw511_icon-name">apple</span></div>
+      <div class="zbw511_item"><i class="fa-brands fa-android zbw511_icon"></i><span class="zbw511_icon-name">android</span></div>
+      <div class="zbw511_item"><i class="fa-brands fa-html5 zbw511_icon"></i><span class="zbw511_icon-name">html5</span></div>
+    </div>
+  </section>
+
+  <footer class="zbw511_footer">
+    <div class="zbw511_footer-inner">
+      <p class="zbw511_footer-text">
+        Font Awesome 6.5.2。字体图标加载一次全体可用，单文件资源已全部本地化于 cdn/fontawesome/。
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
