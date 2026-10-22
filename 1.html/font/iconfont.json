@@ -1,0 +1,37 @@
+{
+  "id": "5238916",
+  "name": "svg0511",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "48600674",
+      "name": "设计",
+      "font_class": "a-wendangleibiexiao_huaban1fuben10",
+      "unicode": "e676",
+      "unicode_decimal": 58998
+    },
+    {
+      "icon_id": "48600684",
+      "name": "安全目标",
+      "font_class": "a-wendangleibiexiao_huaban1fuben20",
+      "unicode": "e679",
+      "unicode_decimal": 59001
+    },
+    {
+      "icon_id": "48600689",
+      "name": "信息",
+      "font_class": "a-wendangleibiexiao_huaban1fuben7",
+      "unicode": "e67e",
+      "unicode_decimal": 59006
+    },
+    {
+      "icon_id": "354639",
+      "name": "qq",
+      "font_class": "iconfonticon6",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 5238916 */
+  src: url('iconfont.woff2?t=1790573435659') format('woff2'),
+       url('iconfont.woff?t=1790573435659') format('woff'),
+       url('iconfont.ttf?t=1790573435659') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-a-wendangleibiexiao_huaban1fuben10:before {
+  content: "\e676";
+}
+
+.icon-a-wendangleibiexiao_huaban1fuben20:before {
+  content: "\e679";
+}
+
+.icon-a-wendangleibiexiao_huaban1fuben7:before {
+  content: "\e67e";
+}
+
+.icon-iconfonticon6:before {
+  content: "\e62e";
+}
+

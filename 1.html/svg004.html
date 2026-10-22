@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG图标</title>
+    <script src="http://at.alicdn.com/t/c/font_5238916_zgu105d09ma.js"></script>
+    <link rel="stylesheet" href="./svg004.css">
+</head>
+<body>
+    <h2>SVG图标</h2>
+    <div class="tab-nav">
+        <div class="tab-item active" onclick="changeTab(this)">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-iconfonticon6"></use>
+            </svg>
+            <span>QQ</span>
+        </div>
+        <div class="tab-item" onclick="changeTab(this)">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-a-wendangleibiexiao_huaban1fuben7"></use>
+            </svg>
+            <span>短信</span>
+        </div>
+        <div class="tab-item" onclick="changeTab(this)">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-a-wendangleibiexiao_huaban1fuben20"></use>
+            </svg>
+            <span>安全防卫</span>
+        </div>
+        <div class="tab-item" onclick="changeTab(this)">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-a-wendangleibiexiao_huaban1fuben10"></use>
+            </svg>
+            <span>设计</span>
+        </div>
+        
+        
+    </div>
+    <script>
+        function changeTab(current) {
+            var items = document.querySelectorAll('.tab-item');
+            for (var i = 0; i < items.length; i++) {
+                items[i].classList.remove('active');
+            }
+            current.classList.add('active');
+        }
+    </script>
+
+
+</body>
+</html>

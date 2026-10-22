@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+    </div>
+<script >
+    var a = 10,b=4;
+    console.log(++a);
+    console.log(a-b>0?a:b);
+    console.log(true&&false,true||false,!true);
+    console.log(0.1+0.2==0.3);
+    console.log(NaN==NaN);
+    console.log(parseInt);
+
+    
+        var grid = document.createElement('div');
+    grid.style.display = 'grid';
+    grid.style.gridTemplateColumns = 'repeat(10, 1fr)';
+    grid.style.gap = '10px';
+    document.body.appendChild(grid);
+    for(var i=1;i<=100;i++){
+        if(i%7==0||i.toString().indexOf('7')!=-1){
+            continue;
+        }
+        var cell = document.createElement('div');
+        cell.textContent = i;
+        grid.appendChild(cell);
+    }
+
+</script>
+</body>
+</html>

@@ -92,4 +92,24 @@
 
 - **执行备注**：按仓库级（非全局）写入 git 署名 Zhang Bowen / zhangbowen@example.com，继续 submit-project 流程：add -A → commit → push -u origin master。
 
+---
+
+## 2026-10-22 14:42:42
+
+- **模型**：Kimi-K3
+- **提示词内容**：
+  > `e:\project/1.html/index.html`这是首页重新修改超链接都加入到这里
+
+- **执行备注**：将 `1.html/index.html` 设为课程首页并补全全部页面链接：修复 `../grid.004.html`（实为同目录）、移除不存在的 `../music/` 链接，新增 layout004/form/index1/dayTyp004/font 下 5 页及根目录抓小球游戏的入口；其他页面"返回首页"链接已天然指向该首页，无需改动；顺手修复文件末尾重复的 `</body></html>`。
+
+---
+
+## 2026-10-22 14:54:23
+
+- **模型**：Kimi-K3
+- **提示词内容**：
+  > `e:\project/1.html`提交项目
+
+- **执行备注**：触发 submit-project 技能。变更内容：skills/ 下 iconfont 页面与首页删除（用户已迁入 1.html/）、新增 1.html/ 目录、提示词日志更新。add -A → commit → push。
+
 
