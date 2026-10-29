@@ -112,4 +112,64 @@
 
 - **执行备注**：触发 submit-project 技能。变更内容：skills/ 下 iconfont 页面与首页删除（用户已迁入 1.html/）、新增 1.html/ 目录、提示词日志更新。add -A → commit → push。
 
+---
+
+## 2026-10-26 14:32:xx
+
+- **模型**：Kimi-K3
+- **提示词内容**：
+  > `e:/project/1.html/work`按照图片完成 / 目标效果为：`https://spontaneous-valkyrie-4e4229.netlify.app/target` `e:/project/1.html/work`完成目标效果
+
+- **执行备注**：补全 `work/starter-level1.html` 中的 5 个 TODO 函数（统计卡、学生卡片、不及格预警、搜索、排序），对照 netlify target 页一比一还原。
+
+---
+
+## 2026-10-26 14:50:50
+
+- **模型**：GLM-5.3-Flash
+- **提示词内容**：
+  > 目标效果为：`https://spontaneous-valkyrie-4e4229.netlify.app/target` `e:/project/1.html/work/starter-level2.html`完成要求
+
+- **执行备注**：补全 `work/starter-level2.html` 全部 TODO（等级一功能 + 6 项新增：各科平均进度条、优秀Top3、各科状元、筛选切换、卡片展开详情、some/every 状态条），对照同一 target 页一比一还原。
+
+---
+
+## 2026-10-28 09:00:00
+
+- **模型**：GLM-5.3-Flash
+- **提示词内容**：
+  > `e:/project/1.html/work/starter-level1.html`将文件名后面加-511-zbw
+
+- **执行备注**：文件重命名 starter-level1.html → starter-level1-511-zbw.html（扩展名前插入 -511-zbw）。
+
+---
+
+## 2026-10-28 09:05:00
+
+- **模型**：GLM-5.3-Flash
+- **提示词内容**：
+  > `e:/project/1.html/work/starter-level2.html`将文件名后面加-511-zbw
+
+- **执行备注**：文件重命名 starter-level2.html → starter-level2-511-zbw.html（与 level1 同规则）。
+
+---
+
+## 2026-10-29 14:18:08
+
+- **模型**：GLM-5.3-Flash
+- **提示词内容**：
+  > 创建技能skill：提交到github，将本项目提交commit并push到`https://github.com/zhangbowen65/zhangbowen0511.git`，已设置公钥。
+
+- **执行备注**：创建项目级技能 submit-github（.trae/skills/submit-github/SKILL.md），走 SSH 认证（git@github.com:zhangbowen65/zhangbowen0511.git），流程与 submit-project 一致：身份检查 → 远程检查 → add -A → commit → push（被拒则 pull --rebase 重试，不 force push）。
+
+---
+
+## 2026-10-29 14:20:39
+
+- **模型**：GLM-5.3-Flash
+- **提示词内容**：
+  > `e:/project/1.html`放到这个文件夹里
+
+- **执行备注**：将刚创建的 submit-github 技能文件夹移入 e:\project\1.html\submit-github\（移出 .trae/skills 后 TRAE 不再自动发现该技能，向用户说明并保留恢复选项）。
+
 
