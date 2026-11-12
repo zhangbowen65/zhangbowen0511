@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>任务一 · 提示词工程师：让 AI 听懂需求</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;background:#f6f8fc;color:#1f2937}
+  .zbw511_wrap{max-width:920px;margin:0 auto;padding:36px 20px 60px}
+
+  .zbw511_head{background:linear-gradient(135deg,#4a2d8f,#7a3fd1);border-radius:20px;padding:32px 34px;color:#fff;margin-bottom:16px;box-shadow:0 12px 30px rgba(74,45,143,.3)}
+  .zbw511_head .zbw511_badge{display:inline-block;padding:5px 14px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);font-size:13px;letter-spacing:2px;margin-bottom:14px}
+  .zbw511_head h1{font-size:27px}
+  .zbw511_head h1 b{color:#ffd166}
+  .zbw511_head p{margin-top:10px;font-size:14.5px;color:#e6dcff;line-height:2}
+
+  .zbw511_sec{background:#fff;border-radius:18px;padding:24px 26px;margin-bottom:20px;border:1px solid #e8ecf5;box-shadow:0 4px 14px rgba(31,41,55,.06)}
+  .zbw511_sec h2{font-size:18px;display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .zbw511_sec h2::before{content:"";width:4px;height:18px;border-radius:3px;background:linear-gradient(#4a2d8f,#7a3fd1)}
+  .zbw511_sec p{font-size:14px;color:#374151;line-height:2}
+  .zbw511_sec code{background:#f1eafe;color:#6d28d9;padding:1px 7px;border-radius:5px;font-family:Consolas,monospace;font-size:13px}
+  .zbw511_sec pre{background:#2b1b52;color:#e9d5ff;border-radius:12px;padding:16px 18px;font-family:Consolas,monospace;font-size:13px;line-height:1.8;overflow-x:auto;margin-top:10px}
+
+  .zbw511_round{border-left:4px solid #7a3fd1;background:#f8f5ff;border-radius:0 12px 12px 0;padding:14px 18px;margin:12px 0}
+  .zbw511_round h3{font-size:14.5px;color:#4a2d8f;margin-bottom:6px}
+  .zbw511_round p{font-size:13.5px;color:#4b5563;line-height:2}
+
+  .zbw511_table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13.5px}
+  .zbw511_table th,.zbw511_table td{border:1px solid #e5e7eb;padding:8px 12px;text-align:left;line-height:1.8}
+  .zbw511_table th{background:#f1eafe;color:#4a2d8f}
+  .zbw511_table td b{color:#b91c1c}
+
+  .zbw511_ok{color:#15803d;font-weight:bold}
+
+  .zbw511_back{text-align:center;margin-top:26px}
+  .zbw511_back a{display:inline-block;text-decoration:none;color:#4a2d8f;font-size:14.5px;font-weight:bold;background:#fff;border:1px solid #e2d6fb;border-radius:999px;padding:10px 26px;margin:0 6px;transition:transform .2s,box-shadow .2s}
+  .zbw511_back a:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(74,45,143,.15)}
+
+  footer{text-align:center;margin-top:30px;color:#9ca3af;font-size:13px;line-height:2}
+</style>
+</head>
+<body>
+<div class="zbw511_wrap">
+
+  <header class="zbw511_head">
+    <span class="zbw511_badge">任 务 一 · 提 示 词 工 程 师 · 让 AI 听 懂 需 求</span>
+    <h1>不写代码，写提示词：<b>两轮迭代驯服 AI</b></h1>
+    <p>目标：把「无缝循环 / 3.2 秒自动翻页且手动后不停 / 圆点分页器可点 / 初始 cube」四条需求翻译给 AI，让它生成 <code style="background:rgba(255,255,255,.15);color:#ffd166">new Swiper('#wySw4', {...})</code> 配置。硬性要求：至少迭代 2 轮，保留每轮提示词与回答。</p>
+  </header>
+
+  <section class="zbw511_sec">
+    <h2>第 1 轮 · 随意提问（埋坑实录）</h2>
+    <div class="zbw511_round">
+      <h3>💬 第 1 轮提示词</h3>
+      <p>帮我生成一段 new Swiper('#wySw4', {}) 的配置代码，要求开启无缝循环、自动轮播 3.2 秒一次、带可点击圆点分页器，初始效果是 cube。</p>
+    </div>
+    <div class="zbw511_round">
+      <h3>🤖 第 1 轮 AI 回答（模拟典型输出）</h3>
+      <pre>{
+  loop: true,
+  autoplay: { delay: 3.2, disableOnInteraction: true },
+  pagination: { clickable: true },
+  effect: 'cube'
+}</pre>
+    </div>
+    <table class="zbw511_table">
+      <tr><th>问题</th><th>错在哪</th><th>正确写法</th></tr>
+      <tr><td>① 单位错</td><td><b>delay: 3.2</b> —— delay 单位是毫秒，3.2 毫秒等于没停</td><td class="zbw511_ok">delay: 3200</td></tr>
+      <tr><td>② 拖动就停</td><td><b>disableOnInteraction: true</b> 是默认值，用户一拖自动播放永久停止</td><td class="zbw511_ok">disableOnInteraction: false</td></tr>
+      <tr><td>③ 分页器没通电</td><td>漏了 <b>el</b>，圆点元素 #wyPag4 没绑上，页面上不显示</td><td class="zbw511_ok">el: '#wyPag4'</td></tr>
+      <tr><td>④ 选择器照抄</td><td>题目给的 <b>#wysw4</b> 大小写有坑，页面真实 id 是 #wySw4</td><td class="zbw511_ok">#wySw4</td></tr>
+    </table>
+  </section>
+
+  <section class="zbw511_sec">
+    <h2>第 2 轮 · 补上下文再问（一次到位）</h2>
+    <div class="zbw511_round">
+      <h3>💬 第 2 轮提示词</h3>
+      <p>重新生成 new Swiper('#wySw4', {}) 的完整配置对象，严格遵守全部 4 条规则：① 开启无缝循环 loop；② 自动轮播间隔 3200ms（单位毫秒），重点：用户手动滑动、点击分页器之后自动轮播不能停止，autoplay 必须设置 disableOnInteraction: false；③ 分页器是圆点，el 绑定 #wyPag4（页面演示四的真实 id），开启 clickable: true 支持点击跳转；④ 切换特效 effect: 'cube'。只输出配置花括号内部内容。</p>
+    </div>
+    <div class="zbw511_round">
+      <h3>🤖 第 2 轮 AI 回答（最终采纳）</h3>
+      <pre>{
+  loop: true,
+  speed: 800,
+  effect: 'cube',
+  autoplay: {
+    delay: 3200,
+    disableOnInteraction: false
+  },
+  pagination: {
+    el: '#wyPag4',
+    clickable: true
+  }
+}</pre>
+      <p><span class="zbw511_ok">✓</span> 四条需求全部命中，可直接粘进 <a href="./swiper-task.html">swiper-task.html</a> 演示四的初始化里验证。</p>
+    </div>
+  </section>
+
+  <section class="zbw511_sec">
+    <h2>亲自验证清单（浏览器实测）</h2>
+    <table class="zbw511_table">
+      <tr><th>需求</th><th>验证方法</th><th>截图</th><th>一句话结论</th></tr>
+      <tr><td>① 无缝循环</td><td>翻到最后一张，继续往后应回到第一张</td><td>（截图位）</td><td>（待填）</td></tr>
+      <tr><td>② 3.2 秒自动翻页</td><td>计时观察两次翻页间隔约 3.2 秒</td><td>（截图位）</td><td>（待填）</td></tr>
+      <tr><td>③ 手动后不停</td><td>手动拖一次，松手后轮播继续自动翻</td><td>（截图位）</td><td>（待填）</td></tr>
+      <tr><td>④ 圆点可点</td><td>点第 4 个圆点直接跳到第 4 张</td><td>（截图位）</td><td>（待填）</td></tr>
+      <tr><td>⑤ 初始 cube</td><td>刷新页面即为 3D 立方体切换</td><td>（截图位）</td><td>（待填）</td></tr>
+    </table>
+  </section>
+
+  <section class="zbw511_sec">
+    <h2>收获：提示词工程三要点</h2>
+    <p>① <b>给上下文</b>：把真实 id（#wySw4）直接告诉 AI，不给它机会猜；② <b>限死单位与默认值陷阱</b>：明确"毫秒"、点名 disableOnInteraction: false 这类反直觉参数；③ <b>限定输出格式</b>："只输出花括号内部"，省去无关解释，拿到就能粘贴。</p>
+  </section>
+
+  <div class="zbw511_back">
+    <a href="./swiper.html">← 返回 Swiper 组件库</a>
+    <a href="./swiper-task.html">去演示页粘代码实操 →</a>
+  </div>
+
+  <footer>任务一 · 提示词工程师 · 高级网页设计 · 2026-2027-1</footer>
+</div>
+</body>
+</html>
