@@ -37,6 +37,12 @@
   .zbw511_readout{font-size:13px;color:#94a3b8;margin-top:12px}
   .zbw511_readout b{color:#38bdf8;font-family:Consolas,monospace;font-size:14px}
 
+  /* 演示视频 */
+  .zbw511_video{
+    width:100%;margin-top:12px;border-radius:14px;display:block;
+    background:#000;aspect-ratio:16/9;object-fit:contain;
+  }
+
   /* ① 按下 */
   .zbw511_pad{
     height:180px;margin-top:12px;border-radius:14px;background:#0b1220;
@@ -164,7 +170,7 @@
   <div class="zbw511_head">
     <span class="zbw511_badge">移动端 · 常用触摸事件</span>
     <h1>按下 · 滑动 · <b>缩放</b></h1>
-    <p>一个总页面收齐移动端常用交互：按下反馈、滑动跟手、手势卡片切换、双指缩放、摇一摇。往下滑逐个试。</p>
+    <p>一个总页面收齐移动端常用交互：按下反馈、滑动跟手、手势卡片切换、双指缩放、摇一摇、倾斜视差。往下滑逐个试。</p>
   </div>
 
   <!-- ① 按下 -->
@@ -269,6 +275,16 @@
     </div>
     <input class="zbw511_slider" id="zbw511_tiltSlider" type="range" min="-30" max="30" step="1" value="0" aria-label="手动模拟左右倾斜">
     <p class="zbw511_desc" id="zbw511_tiltHint">没有传感器时，可以拖动上面的滑块手动模拟左右倾斜。</p>
+  </section>
+
+  <!-- 演示视频（放在页面最下方，完整回放上面的交互） -->
+  <section class="zbw511_demo">
+    <h2><i>▶</i>演示视频</h2>
+    <p class="zbw511_desc">25 秒实拍演示：按下反馈、滑动切换美食卡片、双指缩放、摇一摇抽菜谱、倾斜视差。</p>
+    <video class="zbw511_video" id="zbw511_demoVideo" controls playsinline preload="metadata"
+           src="./mobile-touch-demo.mp4">
+      你的浏览器不支持 video 标签，请<a href="./mobile-touch-demo.mp4">点此下载演示视频</a>。
+    </video>
   </section>
 
   <p class="zbw511_author">姓名：张博文　学号：511</p>
