@@ -127,6 +127,33 @@
   .zbw511_btn--main{background:linear-gradient(135deg,#fbbf24,#f97316);color:#1f2937}
   .zbw511_btn--ghost{background:transparent;border:1px solid rgba(148,163,184,.6);color:#cbd5e1}
 
+  /* ⑤ 倾斜视差 */
+  .zbw511_parallax{
+    position:relative;height:220px;margin-top:12px;border-radius:14px;overflow:hidden;
+    background:linear-gradient(180deg,#0b1a33,#12395c 62%,#08131f);
+  }
+  .zbw511_tilt-item{
+    position:absolute;left:50%;top:50%;
+    transform:translate(-50%,-50%);
+    will-change:transform;transition:transform .12s linear;
+    user-select:none;-webkit-user-select:none;
+  }
+  .zbw511_tilt-sun{
+    width:74px;height:74px;border-radius:50%;top:34%;
+    background:radial-gradient(circle,#ffd166,rgba(255,209,102,.05));
+    box-shadow:0 0 46px 12px rgba(255,209,102,.35);
+  }
+  .zbw511_tilt-ship{font-size:58px;top:52%}
+  .zbw511_tilt-text{
+    top:76%;font-size:15px;letter-spacing:4px;color:#e2f2ff;white-space:nowrap;
+    text-shadow:0 2px 12px rgba(0,0,0,.6);
+  }
+  .zbw511_tilt-wave{
+    top:88%;font-size:13px;letter-spacing:6px;color:rgba(125,211,252,.7);white-space:nowrap;
+  }
+  .zbw511_slider{width:100%;margin-top:14px;accent-color:#38bdf8}
+  .zbw511_desc.zbw511_warn{color:#fbbf24;font-weight:bold}
+
   .zbw511_author{margin-top:22px;font-size:12.5px;color:#64748b;text-align:center}
   .zbw511_back{display:block;text-align:center;margin-top:14px;text-decoration:none;color:#93c5fd;font-size:14px}
 </style>
@@ -224,6 +251,24 @@
       <button class="zbw511_btn zbw511_btn--main" id="zbw511_permBtn" type="button" hidden>开启传感器权限</button>
       <button class="zbw511_btn zbw511_btn--ghost" id="zbw511_pickBtn" type="button" hidden>点我抽一次</button>
     </div>
+  </section>
+
+  <!-- ⑤ 倾斜视差 -->
+  <section class="zbw511_demo">
+    <h2><i>05</i>倾斜视差</h2>
+    <p class="zbw511_desc">监听 <code>deviceorientation</code>，手机左右倾斜时四层元素按不同系数位移，形成纵深视差；iOS 需点按钮授权，没有传感器时可用下方滑块模拟。</p>
+    <div class="zbw511_parallax" id="zbw511_tiltStage">
+      <div class="zbw511_tilt-item zbw511_tilt-sun" data-zbw511-depth="0.3"></div>
+      <div class="zbw511_tilt-item zbw511_tilt-ship" data-zbw511-depth="0.8">🚢</div>
+      <div class="zbw511_tilt-item zbw511_tilt-text" data-zbw511-depth="1.3">爱达 · 魔都号</div>
+      <div class="zbw511_tilt-item zbw511_tilt-wave" data-zbw511-depth="1.8">～～～～～～～～～</div>
+    </div>
+    <p class="zbw511_readout">左右倾斜 gamma：<b id="zbw511_tiltState">0°</b></p>
+    <div class="zbw511_actions">
+      <button class="zbw511_btn zbw511_btn--main" id="zbw511_tiltPermBtn" type="button" hidden>开启方向传感器</button>
+    </div>
+    <input class="zbw511_slider" id="zbw511_tiltSlider" type="range" min="-30" max="30" step="1" value="0" aria-label="手动模拟左右倾斜">
+    <p class="zbw511_desc" id="zbw511_tiltHint">没有传感器时，可以拖动上面的滑块手动模拟左右倾斜。</p>
   </section>
 
   <p class="zbw511_author">姓名：张博文　学号：511</p>
@@ -655,9 +700,87 @@
   }, 2500);
 
   /* ==========================================================
+     ⑤ 倾斜视差：deviceorientation 读 gamma / beta，按层系数位移
+     ========================================================== */
+  var zbw511_tiltStage   = document.getElementById("zbw511_tiltStage");
+  var zbw511_tiltState   = document.getElementById("zbw511_tiltState");
+  var zbw511_tiltPermBtn = document.getElementById("zbw511_tiltPermBtn");
+  var zbw511_tiltSlider  = document.getElementById("zbw511_tiltSlider");
+  var zbw511_tiltHint    = document.getElementById("zbw511_tiltHint");
+  var zbw511_tiltItems   = zbw511_tiltStage.querySelectorAll(".zbw511_tilt-item");
+  var zbw511_tiltGotData = false;
+
+  // gamma：左右倾斜（-90 ~ 90）；beta：前后倾斜（-180 ~ 180）。各截到 ±30 后归一化。
+  // 每层按 data-zbw511-depth 放大位移，层越"近"系数越大 → 视差越明显。
+  function zbw511_applyTilt(zbw511_gamma, zbw511_beta) {
+    var zbw511_g = Math.max(-30, Math.min(30, zbw511_gamma)) / 30;
+    var zbw511_b = Math.max(-30, Math.min(30, zbw511_beta || 0)) / 30;
+
+    for (var zbw511_i = 0; zbw511_i < zbw511_tiltItems.length; zbw511_i++) {
+      var zbw511_el    = zbw511_tiltItems[zbw511_i];
+      var zbw511_depth = parseFloat(zbw511_el.getAttribute("data-zbw511-depth")) || 1;
+      var zbw511_x = -zbw511_g * zbw511_depth * 55;
+      var zbw511_y = -zbw511_b * zbw511_depth * 26;
+      zbw511_el.style.transform =
+        "translate(calc(-50% + " + zbw511_x.toFixed(1) + "px), calc(-50% + " + zbw511_y.toFixed(1) + "px))";
+    }
+
+    zbw511_tiltState.textContent = Math.round(zbw511_gamma) + "°";
+  }
+
+  function zbw511_onOrient(zbw511_event) {
+    if (zbw511_event.gamma == null) { return; }   // 没有有效数据
+    zbw511_tiltGotData = true;
+    zbw511_applyTilt(zbw511_event.gamma, zbw511_event.beta);
+  }
+
+  // 降级：提示不支持的设备，并保留滑块手动模拟（不白屏、不报错）
+  function zbw511_tiltFallback() {
+    zbw511_tiltHint.textContent = "当前设备不支持方向传感器，请拖动上面的滑块模拟左右倾斜。";
+    zbw511_tiltHint.classList.add("zbw511_warn");
+  }
+
+  // 滑块手动模拟（桌面端演示 / 无传感器设备降级）
+  zbw511_tiltSlider.addEventListener("input", function () {
+    zbw511_applyTilt(parseFloat(zbw511_tiltSlider.value), 0);
+  });
+
+  if (window.DeviceOrientationEvent &&
+      typeof DeviceOrientationEvent.requestPermission === "function") {
+    // iOS 13+：方向传感器同样必须由用户手势触发授权
+    zbw511_tiltPermBtn.hidden = false;
+    zbw511_tiltPermBtn.addEventListener("click", function () {
+      DeviceOrientationEvent.requestPermission().then(function (zbw511_state) {
+        if (zbw511_state === "granted") {
+          zbw511_tiltPermBtn.hidden = true;
+          zbw511_tiltHint.textContent = "已开启，左右转动手机试试。";
+          zbw511_tiltHint.classList.remove("zbw511_warn");
+          window.addEventListener("deviceorientation", zbw511_onOrient);
+        } else {
+          zbw511_tiltFallback();
+        }
+      }).catch(function () {
+        zbw511_tiltFallback();
+      });
+    });
+
+  } else if (window.DeviceOrientationEvent) {
+    window.addEventListener("deviceorientation", zbw511_onOrient);
+
+  } else {
+    zbw511_tiltFallback();
+  }
+
+  // 兜底：2.5 秒内没有收到方向数据，也提示降级
+  setTimeout(function () {
+    if (!zbw511_tiltGotData) { zbw511_tiltFallback(); }
+  }, 2500);
+
+  /* ==========================================================
      初始化
      ========================================================== */
   zbw511_dragApply();
+  zbw511_applyTilt(0, 0);
   zbw511_cardUpdate();
   zbw511_zoomClamp();
   zbw511_zoomApply(false);
