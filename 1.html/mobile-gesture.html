@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>任务二 · 手势卡片：左右滑动切换内容 · zbw511</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{
+    font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;
+    background:radial-gradient(circle at 25% 0%,#1e293b 0%,#0b1120 55%,#060a12 100%);
+    color:#e5e7eb;min-height:100vh;
+  }
+  .zbw511_page{max-width:520px;margin:0 auto;padding:26px 20px calc(40px + env(safe-area-inset-bottom))}
+
+  /* 头部 */
+  .zbw511_badge{display:inline-block;font-size:12px;letter-spacing:2px;color:#fbbf24;
+    border:1px solid rgba(251,191,36,.45);background:rgba(251,191,36,.1);
+    padding:4px 12px;border-radius:999px;margin-bottom:12px}
+  .zbw511_head h1{font-size:22px;line-height:1.5;letter-spacing:.5px}
+  .zbw511_head h1 b{color:#fbbf24}
+  .zbw511_head p{font-size:13px;color:#94a3b8;line-height:1.9;margin-top:8px}
+
+  /* 卡片舞台：touch-action:pan-y 表示横向手势交给我们处理，纵向仍可正常滚动页面 */
+  .zbw511_stage{position:relative;height:420px;margin-top:20px;touch-action:pan-y}
+
+  /* 卡片：默认透明并微微缩小，切换靠 0.3s 过渡完成淡入淡出 */
+  .zbw511_card{
+    position:absolute;inset:0;border-radius:24px;padding:26px 24px;
+    display:flex;flex-direction:column;justify-content:space-between;
+    color:#fff;overflow:hidden;
+    opacity:0;
+    transform:translateX(var(--zbw511_dx,0px)) scale(.96);
+    transition:transform .3s ease,opacity .3s ease;
+    pointer-events:none;
+    box-shadow:0 18px 40px rgba(0,0,0,.5);
+  }
+  .zbw511_card.zbw511_active{opacity:1;transform:translateX(0) scale(1);pointer-events:auto}
+  .zbw511_card::after{
+    content:attr(data-zbw511-no);position:absolute;right:8px;bottom:-30px;
+    font-size:130px;font-weight:900;color:rgba(255,255,255,.16);line-height:1;pointer-events:none;
+  }
+
+  .zbw511_taste{font-size:12px;letter-spacing:1px;background:rgba(0,0,0,.22);
+    border:1px solid rgba(255,255,255,.25);padding:5px 12px;border-radius:999px;align-self:flex-start}
+  .zbw511_card h2{font-size:30px;letter-spacing:2px;margin-bottom:8px}
+  .zbw511_en{font-size:11px;color:rgba(255,255,255,.72);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+  .zbw511_card p{font-size:14px;line-height:1.9;color:rgba(255,255,255,.94);max-width:92%}
+
+  /* 底部计数与提示 */
+  .zbw511_meta{display:flex;align-items:center;justify-content:space-between;margin-top:18px}
+  .zbw511_counter{font-size:14px;color:#cbd5e1}
+  .zbw511_counter b{color:#fbbf24;font-size:20px;font-weight:800;margin:0 2px}
+  .zbw511_hint{font-size:13px;color:#94a3b8;text-align:center;margin-top:14px;min-height:20px;transition:color .2s}
+  .zbw511_hint.zbw511_warn{color:#fbbf24;font-weight:bold}
+
+  .zbw511_back{text-decoration:none;color:#93c5fd;font-size:14px}
+</style>
+</head>
+<body>
+<div class="zbw511_page">
+
+  <div class="zbw511_head">
+    <span class="zbw511_badge">任务二 · 手势卡片</span>
+    <h1>中华美食卡片 · <b>左右滑动切换</b></h1>
+    <p>在手机上左右滑动卡片切换上一道 / 下一道；短距离滑动不会误触，快速连滑也不会一次跳两张。</p>
+  </div>
+
+  <!-- 卡片容器：4 道菜全部渲染好，靠 zbw511_active 类决定谁显示 -->
+  <div class="zbw511_stage" id="zbw511_stage">
+
+    <div class="zbw511_card zbw511_active" data-zbw511-no="01"
+         style="background:linear-gradient(145deg,#f97316,#b91c1c)">
+      <span class="zbw511_taste">川菜 · 糊辣荔枝味</span>
+      <div>
+        <div class="zbw511_en">Kung Pao Chicken</div>
+        <h2>宫保鸡丁</h2>
+        <p>鸡丁、花生米与干辣椒同炒，酸甜里带一丝糊辣，入口生香，是最经典的"米饭杀手"之一。</p>
+      </div>
+    </div>
+
+    <div class="zbw511_card" data-zbw511-no="02"
+         style="background:linear-gradient(145deg,#ef4444,#7f1d1d)">
+      <span class="zbw511_taste">川菜 · 麻辣鲜香</span>
+      <div>
+        <div class="zbw511_en">Mapo Tofu</div>
+        <h2>麻婆豆腐</h2>
+        <p>嫩豆腐配牛肉末，出锅前撒一把花椒面，讲究"麻、辣、烫、香、酥、嫩、鲜、活"。</p>
+      </div>
+    </div>
+
+    <div class="zbw511_card" data-zbw511-no="03"
+         style="background:linear-gradient(145deg,#b45309,#78350f)">
+      <span class="zbw511_taste">浙菜 · 浓油赤酱</span>
+      <div>
+        <div class="zbw511_en">Dongpo Pork</div>
+        <h2>东坡肉</h2>
+        <p>五花肉慢火焖至酥烂，色泽红亮、肥而不腻，配一碗白饭就是最踏实的满足。</p>
+      </div>
+    </div>
+
+    <div class="zbw511_card" data-zbw511-no="04"
+         style="background:linear-gradient(145deg,#d97706,#92400e)">
+      <span class="zbw511_taste">京菜 · 果木挂炉</span>
+      <div>
+        <div class="zbw511_en">Peking Roast Duck</div>
+        <h2>北京烤鸭</h2>
+        <p>枣木明火挂炉烤制，鸭皮酥脆透亮，片鸭配荷叶饼、葱丝与甜面酱，一卷就是一座城的味道。</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="zbw511_meta">
+    <span class="zbw511_counter" id="zbw511_counter">第 <b>1</b>/4 张</span>
+    <a class="zbw511_back" href="index.html">← 返回首页</a>
+  </div>
+
+  <p class="zbw511_hint" id="zbw511_hint">← 左滑下一道 · 右滑上一道 →</p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ========== 1. 元素与状态 ========== */
+  var zbw511_stage    = document.getElementById("zbw511_stage");
+  var zbw511_cards    = zbw511_stage.querySelectorAll(".zbw511_card");
+  var zbw511_counter  = document.getElementById("zbw511_counter");
+  var zbw511_hint     = document.getElementById("zbw511_hint");
+  var zbw511_total    = zbw511_cards.length;   // 共 4 道菜
+
+  var zbw511_index    = 0;       // 当前显示第几张（从 0 开始）
+  var zbw511_startX   = 0;       // 手指按下时的横坐标
+  var zbw511_startY   = 0;       // 手指按下时的纵坐标
+  var zbw511_tracking = false;   // 本次触摸是否正在跟踪
+  var zbw511_locked   = false;   // 300ms 冷却锁：防止快速连滑一次跳两张
+  var zbw511_hintTimer = null;
+
+  var zbw511_THRESHOLD = 40;    // 判定为滑动的最小横向位移（px）
+  var zbw511_COOLDOWN  = 300;   // 切换冷却时间（ms），与 0.3s 过渡动画对齐
+
+  /* ========== 2. 工具函数 ========== */
+
+  // 底部提示：1.4 秒后自动恢复默认文案
+  function zbw511_showHint(zbw511_text, zbw511_isWarn) {
+    zbw511_hint.textContent = zbw511_text;
+    if (zbw511_isWarn) {
+      zbw511_hint.classList.add("zbw511_warn");
+    } else {
+      zbw511_hint.classList.remove("zbw511_warn");
+    }
+    if (zbw511_hintTimer) { clearTimeout(zbw511_hintTimer); }
+    zbw511_hintTimer = setTimeout(function () {
+      zbw511_hint.textContent = "← 左滑下一道 · 右滑上一道 →";
+      zbw511_hint.classList.remove("zbw511_warn");
+    }, 1400);
+  }
+
+  // 刷新"第 n/4 张"
+  function zbw511_updateCounter() {
+    zbw511_counter.innerHTML = "第 <b>" + (zbw511_index + 1) + "</b>/" + zbw511_total + " 张";
+  }
+
+  /* ========== 3. 核心切换 ========== */
+  // zbw511_step：+1 下一张（左滑）  -1 上一张（右滑）
+  function zbw511_go(zbw511_step) {
+    var zbw511_next = zbw511_index + zbw511_step;
+
+    // 边界处理：第一张再右滑 / 最后一张再左滑，只提示不切换
+    if (zbw511_next < 0) {
+      zbw511_showHint("已经是第一张了", true);
+      return;
+    }
+    if (zbw511_next > zbw511_total - 1) {
+      zbw511_showHint("已经是最后一张了", true);
+      return;
+    }
+
+    // 冷却期内忽略这次切换（快速连续滑动不会一次跳两张）
+    if (zbw511_locked) { return; }
+
+    var zbw511_prevCard = zbw511_cards[zbw511_index];
+    var zbw511_nextCard = zbw511_cards[zbw511_next];
+
+    // 新卡片从滑动方向的一侧进场，切换更有方向感
+    zbw511_nextCard.style.setProperty("--zbw511_dx", (zbw511_step > 0 ? "90px" : "-90px"));
+    void zbw511_nextCard.offsetWidth;   // 强制回流，让起始位置先生效，才能看到过渡
+
+    zbw511_prevCard.classList.remove("zbw511_active");
+    zbw511_nextCard.classList.add("zbw511_active");
+
+    zbw511_index = zbw511_next;
+    zbw511_updateCounter();
+
+    // 上锁 300ms，与过渡动画等长
+    zbw511_locked = true;
+    setTimeout(function () { zbw511_locked = false; }, zbw511_COOLDOWN);
+  }
+
+  /* ========== 4. 触摸手势 ========== */
+
+  // 按下：只记录单指起点
+  function zbw511_onTouchStart(zbw511_event) {
+    if (zbw511_event.touches.length !== 1) {   // 多指按下不处理
+      zbw511_tracking = false;
+      return;
+    }
+    zbw511_startX = zbw511_event.touches[0].clientX;
+    zbw511_startY = zbw511_event.touches[0].clientY;
+    zbw511_tracking = true;
+  }
+
+  // 松手：用 changedTouches[0] 取出松手那一刻的位置，算出横向位移
+  function zbw511_onTouchEnd(zbw511_event) {
+    if (!zbw511_tracking) { return; }
+    zbw511_tracking = false;
+
+    var zbw511_touch = zbw511_event.changedTouches[0];
+    var zbw511_dx = zbw511_touch.clientX - zbw511_startX;
+    var zbw511_dy = zbw511_touch.clientY - zbw511_startY;
+
+    // ① 横向位移不足 40px：判定为误触，不切换
+    if (Math.abs(zbw511_dx) < zbw511_THRESHOLD) { return; }
+
+    // ② 纵向位移更大：说明用户想滚动页面，不切换
+    if (Math.abs(zbw511_dx) <= Math.abs(zbw511_dy)) { return; }
+
+    // ③ 位移为负 = 向左滑 → 下一张；为正 = 向右滑 → 上一张
+    zbw511_go(zbw511_dx < 0 ? 1 : -1);
+  }
+
+  // 触摸被系统打断（如来电、切后台）时重置状态
+  function zbw511_onTouchCancel() {
+    zbw511_tracking = false;
+  }
+
+  zbw511_stage.addEventListener("touchstart", zbw511_onTouchStart, { passive: true });
+  zbw511_stage.addEventListener("touchend", zbw511_onTouchEnd, { passive: true });
+  zbw511_stage.addEventListener("touchcancel", zbw511_onTouchCancel, { passive: true });
+
+  // 桌面端调试用：方向键同样可以切换（手机上不生效）
+  document.addEventListener("keydown", function (zbw511_event) {
+    if (zbw511_event.key === "ArrowRight") { zbw511_go(1); }
+    if (zbw511_event.key === "ArrowLeft") { zbw511_go(-1); }
+  });
+
+  /* ========== 5. 初始化 ========== */
+  zbw511_updateCounter();
+})();
+</script>
+</body>
+</html>

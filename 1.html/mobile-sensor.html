@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>任务四 · 摇一摇彩蛋：今日菜谱 · zbw511</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{
+    font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;
+    background:radial-gradient(circle at 50% 0%,#1c2541 0%,#0b1120 60%,#060a12 100%);
+    color:#e5e7eb;min-height:100vh;
+  }
+  .zbw511_page{max-width:520px;margin:0 auto;padding:34px 20px calc(40px + env(safe-area-inset-bottom));text-align:center}
+
+  .zbw511_badge{display:inline-block;font-size:12px;letter-spacing:2px;color:#fbbf24;
+    border:1px solid rgba(251,191,36,.45);background:rgba(251,191,36,.1);
+    padding:4px 12px;border-radius:999px}
+  .zbw511_page h1{font-size:23px;margin-top:16px;letter-spacing:1px}
+  .zbw511_page h1 b{color:#fbbf24}
+
+  .zbw511_status{margin-top:12px;font-size:14px;color:#94a3b8;line-height:1.9;min-height:22px}
+  .zbw511_status.zbw511_warn{color:#fbbf24;font-weight:bold}
+
+  /* 手机图标：静止时一直在"摇"，提示用户摇一摇 */
+  .zbw511_phone{font-size:46px;margin:22px 0 4px;display:inline-block;animation:zbw511_shake 2.2s ease-in-out infinite}
+  @keyframes zbw511_shake{
+    0%,68%,100%{transform:rotate(0)}
+    72%{transform:rotate(-14deg)}
+    76%{transform:rotate(14deg)}
+    80%{transform:rotate(-10deg)}
+    84%{transform:rotate(10deg)}
+    88%{transform:rotate(-4deg)}
+  }
+
+  /* 结果卡片 */
+  .zbw511_dish{
+    margin-top:14px;padding:26px 22px;border-radius:22px;min-height:176px;
+    background:linear-gradient(150deg,rgba(251,191,36,.16),rgba(239,68,68,.14));
+    border:1px solid rgba(251,191,36,.35);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  }
+  .zbw511_dish-emoji{font-size:52px;line-height:1}
+  .zbw511_dish-name{font-size:22px;font-weight:bold;letter-spacing:2px}
+  .zbw511_dish-desc{font-size:13px;color:#cbd5e1;line-height:1.8}
+
+  /* 抽中时重新触发弹出动画 */
+  .zbw511_dish.zbw511_pop{animation:zbw511_pop .5s cubic-bezier(.2,1.5,.4,1)}
+  @keyframes zbw511_pop{
+    0%{transform:scale(.7);opacity:.3}
+    60%{transform:scale(1.05)}
+    100%{transform:scale(1);opacity:1}
+  }
+
+  .zbw511_actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px}
+  .zbw511_btn{border:none;border-radius:999px;padding:12px 26px;font-size:14.5px;
+    font-family:inherit;cursor:pointer;font-weight:bold}
+  .zbw511_btn--main{background:linear-gradient(135deg,#fbbf24,#f97316);color:#1f2937}
+  .zbw511_btn--ghost{background:transparent;border:1px solid rgba(148,163,184,.6);color:#cbd5e1}
+
+  .zbw511_author{margin-top:24px;font-size:13px;color:#94a3b8;letter-spacing:1px}
+
+  .zbw511_note{
+    margin-top:18px;text-align:left;font-size:13px;line-height:2;color:#94a3b8;
+    background:rgba(148,163,184,.08);border:1px solid rgba(148,163,184,.2);
+    border-radius:14px;padding:16px 18px;
+  }
+  .zbw511_note b{color:#e2e8f0;display:block;margin-bottom:6px}
+
+  .zbw511_back{display:block;margin-top:22px;text-decoration:none;color:#93c5fd;font-size:14px}
+</style>
+</head>
+<body>
+<div class="zbw511_page">
+
+  <span class="zbw511_badge">任务四 · 摇一摇彩蛋</span>
+  <h1>摇一摇手机 · <b>抽今日菜谱</b></h1>
+  <p class="zbw511_status" id="zbw511_status">摇一摇手机，抽今日菜谱</p>
+
+  <div class="zbw511_phone">📱</div>
+
+  <div class="zbw511_dish" id="zbw511_dish">
+    <span class="zbw511_dish-emoji">🍽️</span>
+    <span class="zbw511_dish-name">等待摇一摇</span>
+    <span class="zbw511_dish-desc">轻轻摇动手机，让今天吃什么交给运气</span>
+  </div>
+
+  <div class="zbw511_actions">
+    <button class="zbw511_btn zbw511_btn--main" id="zbw511_permBtn" type="button" hidden>开启传感器权限</button>
+    <button class="zbw511_btn zbw511_btn--ghost" id="zbw511_pickBtn" type="button" hidden>点我抽一次</button>
+  </div>
+
+  <p class="zbw511_author">姓名：张博文　学号：511</p>
+
+  <div class="zbw511_note">
+    <b>为什么必须做降级？</b>
+    ① 不是所有设备都能摇：桌面浏览器、部分平板和旧手机没有加速度传感器；
+    ② 浏览器隐私策略限制，或 iOS 没有授权时，devicemotion 收不到任何数据；
+    ③ 在部分非安全（非 https）环境下，传感器同样会被浏览器直接禁用。
+    如果不做降级，用户看到的就是一个永远停在"等待摇一摇"的页面，像是卡死了。
+    所以在 2.5 秒内收不到数据时，页面会明确提示"当前设备不支持"，并放出"点我抽一次"按钮，
+    保证抽菜谱这个核心功能在任何设备上都能完成。
+  </div>
+
+  <a class="zbw511_back" href="index.html">← 返回首页</a>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ========== 1. 元素与状态 ========== */
+  var zbw511_status    = document.getElementById("zbw511_status");
+  var zbw511_dish      = document.getElementById("zbw511_dish");
+  var zbw511_permBtn   = document.getElementById("zbw511_permBtn");
+  var zbw511_pickBtn   = document.getElementById("zbw511_pickBtn");
+
+  var zbw511_dishEmoji = zbw511_dish.querySelector(".zbw511_dish-emoji");
+  var zbw511_dishName  = zbw511_dish.querySelector(".zbw511_dish-name");
+  var zbw511_dishDesc  = zbw511_dish.querySelector(".zbw511_dish-desc");
+
+  var zbw511_cooling = false;      // 冷却锁：一次摇动只抽一次
+  var zbw511_gotData = false;      // 是否真的收到过传感器数据
+
+  var zbw511_THRESHOLD = 18;       // 合成加速度阈值（静止时约为 9.8，摇动时明显超过 18）
+  var zbw511_COOLTIME  = 1500;     // 冷却时间 1.5 秒
+
+  // 菜谱池
+  var zbw511_dishes = [
+    { emoji: "🍗", name: "宫保鸡丁",   desc: "酸甜微辣，花生脆香，米饭杀手" },
+    { emoji: "🍅", name: "番茄炒蛋",   desc: "国民下饭菜，酸甜开胃零失败" },
+    { emoji: "🌶️", name: "麻婆豆腐",   desc: "麻、辣、烫、香、酥、嫩、鲜、活" },
+    { emoji: "🍖", name: "红烧肉",     desc: "浓油赤酱，肥而不腻，入口即化" },
+    { emoji: "🐟", name: "清蒸鲈鱼",   desc: "鲜掉眉毛，只放葱姜和一勺蒸鱼豉油" },
+    { emoji: "🍜", name: "兰州牛肉面", desc: "一清二白三红四绿五黄" }
+  ];
+
+  /* ========== 2. 抽菜谱 ========== */
+  function zbw511_draw() {
+    if (zbw511_cooling) { return; }   // 冷却中：一次摇动只触发一次
+    zbw511_cooling = true;
+
+    var zbw511_item = zbw511_dishes[Math.floor(Math.random() * zbw511_dishes.length)];
+
+    zbw511_dishEmoji.textContent = zbw511_item.emoji;
+    zbw511_dishName.textContent  = zbw511_item.name;
+    zbw511_dishDesc.textContent  = zbw511_item.desc;
+
+    // 先移除再加回，强制重新播放弹出动画
+    zbw511_dish.classList.remove("zbw511_pop");
+    void zbw511_dish.offsetWidth;
+    zbw511_dish.classList.add("zbw511_pop");
+
+    zbw511_status.textContent = "摇出来了！今日就吃这道";
+    zbw511_status.classList.remove("zbw511_warn");
+
+    setTimeout(function () { zbw511_cooling = false; }, zbw511_COOLTIME);
+  }
+
+  /* ========== 3. 摇动监听 ========== */
+  function zbw511_onMotion(zbw511_event) {
+    // accelerationIncludingGravity 含重力：x / y / z 三轴
+    var zbw511_acc = zbw511_event.accelerationIncludingGravity;
+    if (!zbw511_acc || zbw511_acc.x == null) { return; }   // 本次没有有效数据
+
+    zbw511_gotData = true;
+
+    // 合成加速度 = 三轴平方和开根号；手机静止时约等于 9.8
+    var zbw511_total = Math.sqrt(
+      zbw511_acc.x * zbw511_acc.x +
+      zbw511_acc.y * zbw511_acc.y +
+      zbw511_acc.z * zbw511_acc.z
+    );
+
+    // 超过阈值判定为"摇动"
+    if (zbw511_total > zbw511_THRESHOLD) {
+      zbw511_draw();
+    }
+  }
+
+  /* ========== 4. 降级方案 ========== */
+  function zbw511_fallback(zbw511_message) {
+    zbw511_status.textContent = zbw511_message;
+    zbw511_status.classList.add("zbw511_warn");
+    zbw511_pickBtn.hidden = false;   // 放出"点我抽一次"按钮
+  }
+
+  zbw511_pickBtn.addEventListener("click", function () {
+    zbw511_draw();
+  });
+
+  /* ========== 5. 启动检测 ========== */
+  if (window.DeviceMotionEvent && typeof DeviceMotionEvent.requestPermission === "function") {
+    // iOS 13+：必须由用户点击按钮申请权限，不能自动申请
+    zbw511_permBtn.hidden = false;
+    zbw511_status.textContent = "iPhone 需先开启运动传感器权限";
+
+    zbw511_permBtn.addEventListener("click", function () {
+      DeviceMotionEvent.requestPermission().then(function (zbw511_state) {
+        if (zbw511_state === "granted") {
+          zbw511_permBtn.hidden = true;
+          zbw511_status.textContent = "摇一摇手机，抽今日菜谱";
+          window.addEventListener("devicemotion", zbw511_onMotion);
+        } else {
+          zbw511_fallback("未获得传感器权限，可点按钮抽取");
+        }
+      }).catch(function () {
+        zbw511_fallback("当前设备不支持，请用手机打开");
+      });
+    });
+
+  } else if (window.DeviceMotionEvent) {
+    // 普通安卓 / 桌面浏览器：直接监听
+    window.addEventListener("devicemotion", zbw511_onMotion);
+
+  } else {
+    // 连事件对象都没有：直接降级
+    zbw511_fallback("当前设备不支持，请用手机打开");
+  }
+
+  // 兜底：2.5 秒内没收到任何传感器数据，也走降级
+  setTimeout(function () {
+    if (!zbw511_gotData) {
+      zbw511_fallback("当前设备不支持，请用手机打开");
+    }
+  }, 2500);
+
+  /* ========== 6. 答辩提示（控制台可见，演示时可展开） ========== */
+  console.log(
+    "%c摇一摇彩蛋 · 答辩要点",
+    "color:#fbbf24;font-weight:bold",
+    "\n1. accelerationIncludingGravity 包含重力（静止约 9.8），acceleration 已剔除重力，只反映设备自身运动；" +
+    "\n2. 用三轴合成加速度 sqrt(x²+y²+z²) 与阈值 18 比较，避免只看单轴漏判；" +
+    "\n3. 触发后 1.5 秒冷却，防止一次摇动因连续多帧超阈值而重复抽奖；" +
+    "\n4. 无传感器 / 无数据时降级为手动按钮，保证功能可用且不白屏。"
+  );
+})();
+</script>
+</body>
+</html>
