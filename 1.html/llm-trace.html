@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<!-- 姓名：张博文 | 学号：24001010511 | 时间：2026-11-23 | 大模型：DeepSeek-V4.1-Flash -->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LLM 实践操作痕迹展示 · 张博文</title>
+<style>
+  :root {
+    --bg: #07111f;
+    --panel: #ffffff;
+    --panel-soft: #eef3f9;
+    --text: #1b2440;
+    --text-soft: #65738c;
+    --line: #dce6f7;
+    --blue: #265dff;
+    --shadow: rgba(8, 22, 54, 0.18);
+    --font: "Segoe UI", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 40px 18px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    color: var(--text);
+    background:
+      radial-gradient(circle at 70% 12%, rgba(62, 105, 248, 0.25), transparent 20%),
+      radial-gradient(circle at 16% 78%, rgba(56, 195, 159, 0.17), transparent 22%),
+      linear-gradient(135deg, var(--bg), #091a34 78%);
+    font-family: var(--font);
+  }
+
+  .page {
+    width: min(1100px, calc(100vw - 36px));
+  }
+
+  .page-head {
+    background: linear-gradient(135deg, #eef6ff 0%, #d9eaff 100%);
+    border-radius: 24px;
+    padding: 42px 40px 30px;
+    box-shadow: 0 32px 90px var(--shadow);
+  }
+
+  .label {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(38, 93, 255, 0.1);
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+
+  h1 {
+    margin: 16px 0 10px;
+    font-size: 38px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  .subtitle {
+    margin: 0;
+    color: var(--text-soft);
+    font-size: 15px;
+    line-height: 1.9;
+  }
+
+  .panel {
+    margin-top: 22px;
+    background: var(--panel);
+    border-radius: 20px;
+    padding: 26px;
+    border: 1px solid var(--line);
+    box-shadow: 0 16px 40px var(--shadow);
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .shot {
+    margin: 0;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--panel-soft);
+  }
+
+  .shot a { display: block; }
+
+  .shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .shot figcaption {
+    padding: 10px 14px 12px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text-soft);
+  }
+
+  .back {
+    margin-top: 20px;
+  }
+
+  .back a {
+    color: #cfe2ff;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .back a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 760px) {
+    h1 { font-size: 28px; }
+    .page-head { padding: 30px 22px 24px; }
+    .gallery { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="page-head">
+    <span class="label">课程实践 / LLM</span>
+    <h1>LLM 实践操作痕迹展示</h1>
+    <p class="subtitle">姓名：张博文　·　学号：24001010511</p>
+  </header>
+
+  <section class="panel">
+    <div class="gallery">
+
+      <figure class="shot">
+        <a href="./images/zbw_llm_service_1.png" target="_blank" rel="noopener">
+          <img src="./images/zbw_llm_service_1.png" alt="AI客服切换到硅基流动后提问退换货" />
+        </a>
+        <figcaption>AI客服 · 切换到硅基流动后提问「怎么申请退换货？」</figcaption>
+      </figure>
+
+      <figure class="shot">
+        <a href="./images/zbw_llm_service_2.png" target="_blank" rel="noopener">
+          <img src="./images/zbw_llm_service_2.png" alt="AI客服切换后继续对话" />
+        </a>
+        <figcaption>AI客服 · 切换后继续追问「支持哪些支付方式？」</figcaption>
+      </figure>
+
+      <figure class="shot">
+        <a href="./images/zbw_llm_kb.png" target="_blank" rel="noopener">
+          <img src="./images/zbw_llm_kb.png" alt="知识库问答结果与引用资料" />
+        </a>
+        <figcaption>知识库问答 · 返回答案并列出命中的资料来源</figcaption>
+      </figure>
+
+      <figure class="shot">
+        <a href="./images/zbw_llm_vision.png" target="_blank" rel="noopener">
+          <img src="./images/zbw_llm_vision.png" alt="图像识别大象图片及描述" />
+        </a>
+        <figcaption>图像识别 · 上传图片返回主体与场景描述</figcaption>
+      </figure>
+
+      <figure class="shot">
+        <a href="./images/zbw_llm_asr.png" target="_blank" rel="noopener">
+          <img src="./images/zbw_llm_asr.png" alt="语音识别结果" />
+        </a>
+        <figcaption>语音识别 · 录音 3 秒转写为「你好你好，你是谁。」</figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+  <div class="back">
+    <a href="./practice.html">← 返回实践演示</a>
+  </div>
+
+</div>
+
+</body>
+</html>

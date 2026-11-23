@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<!-- 姓名：张博文 | 学号：24001010511 | 时间：2026-11-23 | 大模型：DeepSeek-V4.1-Flash -->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>实践演示 · 张博文</title>
+<style>
+  :root {
+    --bg: #07111f;
+    --panel: #ffffff;
+    --panel-soft: #eef3f9;
+    --text: #1b2440;
+    --text-soft: #65738c;
+    --line: #dce6f7;
+    --blue: #265dff;
+    --blue-light: #eaf1ff;
+    --shadow: rgba(8, 22, 54, 0.18);
+    --font: "Segoe UI", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 40px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+    background:
+      radial-gradient(circle at 70% 12%, rgba(62, 105, 248, 0.25), transparent 20%),
+      radial-gradient(circle at 16% 78%, rgba(56, 195, 159, 0.17), transparent 22%),
+      linear-gradient(135deg, var(--bg), #091a34 78%);
+    font-family: var(--font);
+  }
+
+  .page {
+    width: min(1000px, calc(100vw - 36px));
+  }
+
+  .page-head {
+    background: linear-gradient(135deg, #eef6ff 0%, #d9eaff 100%);
+    border-radius: 24px;
+    padding: 42px 40px 30px;
+    box-shadow: 0 32px 90px var(--shadow);
+  }
+
+  .label {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(38, 93, 255, 0.1);
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+
+  h1 {
+    margin: 16px 0 10px;
+    font-size: 40px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  .subtitle {
+    margin: 0;
+    color: var(--text-soft);
+    font-size: 15px;
+    line-height: 1.9;
+  }
+
+  .panel {
+    margin-top: 22px;
+    background: var(--panel);
+    border-radius: 20px;
+    padding: 26px;
+    border: 1px solid var(--line);
+    box-shadow: 0 16px 40px var(--shadow);
+  }
+
+  .entry {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 22px 24px;
+    border-radius: 16px;
+    background: var(--panel-soft);
+    border: 1px solid var(--line);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .entry:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 36px rgba(8, 22, 54, 0.14);
+  }
+
+  .entry-no {
+    flex: 0 0 auto;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 900;
+  }
+
+  .entry-main { flex: 1; min-width: 0; }
+
+  .entry-main h2 {
+    margin: 0 0 6px;
+    font-size: 18px;
+    font-weight: 900;
+  }
+
+  .entry-main p {
+    margin: 0;
+    color: var(--text-soft);
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .entry-arrow {
+    flex: 0 0 auto;
+    color: var(--blue);
+    font-size: 22px;
+  }
+
+  .back {
+    margin-top: 20px;
+  }
+
+  .back a {
+    color: #cfe2ff;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .back a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 640px) {
+    h1 { font-size: 30px; }
+    .page-head { padding: 30px 22px 24px; }
+    .entry { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="page-head">
+    <span class="label">课堂实践 / 实践演示</span>
+    <h1>实践演示</h1>
+    <p class="subtitle">下面进入大模型实践的操作痕迹展示，查看 AI客服、知识库、图像识别与语音识别的现场截图。</p>
+  </header>
+
+  <section class="panel">
+    <a class="entry" href="./llm-trace.html">
+      <span class="entry-no">01</span>
+      <div class="entry-main">
+        <h2>LLM 实践操作痕迹展示</h2>
+        <p>包含供应商切换、知识库问答、图像识别、语音识别的 5 张现场截图与说明。</p>
+      </div>
+      <span class="entry-arrow">→</span>
+    </a>
+  </section>
+
+  <div class="back">
+    <a href="./index.html">← 返回课堂首页</a>
+  </div>
+
+</div>
+
+</body>
+</html>
